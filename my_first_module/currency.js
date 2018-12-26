@@ -6,3 +6,9 @@ function roundTwo(amount) {
 
 exports.canadianToUS = canadian => roundTwo(canadian * canadianDollar);
 exports.USToCanadian = us => roundTwo(us / canadianDollar);
+
+console.log(exports);
+console.log(module.exports);
+console.log(exports === module.exports);
+exports = {};
+console.log(exports === module.exports);
