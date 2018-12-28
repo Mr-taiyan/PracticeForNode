@@ -25,6 +25,7 @@ app.post('/articles', (req, res, next) => {
         if (err || !result) {
             res.status(500).send('Error downloading article');
         }
+        console.log(result.title);
 
         Article.create({
             title: result.title,
