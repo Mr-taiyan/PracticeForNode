@@ -1,5 +1,6 @@
+'use strict';
 const express = require('express');
-app = express();
+const app = express();
 const bodyParser = require('body-parser');
 const articles = [{
     title: 'Example'
