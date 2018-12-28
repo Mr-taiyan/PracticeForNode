@@ -1,3 +1,5 @@
+'use strict';
+const read = require('node-readability');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -17,8 +19,21 @@ app.get('/articles/', (req, res, next) => {
     });
 });
 
-app.post('articles', (req, res) => {
-    res.send('ok');
+app.post('/articles', (req, res, next) => {
+    const url = req.body.url;
+    read(url, (err, result) => {
+        if (err || !result) {
+            res.status(500).send('Error downloading article');
+        }
+
+        Article.create({
+            title: result.title,
+            content: result.content,
+        }, (err, article) => {
+            if (err) return next(err);
+            res.send('OK');
+        });
+    });
 });
 
 app.get('/articles/:id', (req, res, next) => {
