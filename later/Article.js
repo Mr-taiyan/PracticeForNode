@@ -15,7 +15,7 @@ class Article {
         db.all('SELECT * FROM articles', cb);
     }
 
-    static find(cb) {
+    static find(id, cb) {
         db.get('SELECT * FROM articles WHERE id = ?', id, cb);
     }
 

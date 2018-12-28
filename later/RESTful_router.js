@@ -1,31 +1,41 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const articles = [{
-    title: 'example'
-}];
+const Article = require('./Article').Article;
 
 app.set('port', process.env.PORT || 8080);
 
-app.get('/articles/', (req, res) => {
-    res.send(articles);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extend: true,
+}));
+
+app.get('/articles/', (req, res, next) => {
+    Article.all((err, articles) => {
+        if (err) return next(err);
+        res.send(articles);
+    });
 });
 
 app.post('articles', (req, res) => {
     res.send('ok');
 });
 
-app.get('/articles/:id', (req, res) => {
+app.get('/articles/:id', (req, res, next) => {
     const id = req.params.id;
-    console.log('fetch ', id);
-    res.send(articles[id]);
+    Article.find(id, (err, article) => {
+        if (err) return next(err);
+        res.send(article);
+    });
 });
 
-app.delete('/articles/:id', (req, res) => {
+app.delete('/articles/:id', (req, res, next) => {
     const id = req.params.id;
-    console.log('deleting: ', id);
-    delete articles[id];
-    res.send({
-        message: 'deleted'
+    Article.delete(id, (err, article) => {
+        if (err) return next(err);
+        res.send({
+            message: 'Deleted',
+        });
     });
 });
 
