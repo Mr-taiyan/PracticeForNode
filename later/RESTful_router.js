@@ -11,6 +11,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extend: true,
 }));
+app.use(
+    '/css/bootstrap.css',
+    express.static('node_modules/bootstrap/dist/css/bootstrap.css')
+);
 
 app.get('/articles/', (req, res, next) => {
     Article.all((err, articles) => {
@@ -19,6 +23,7 @@ app.get('/articles/', (req, res, next) => {
         res.format({
             html: () => {
                 res.render('articles.ejs', {articles: articles});
+                console.log(articles);
             },
             json: () => {
                 res.send(articles);
