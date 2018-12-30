@@ -16,6 +16,10 @@ channel.on('join', function (id, client) {
     };
     this.on('broadcast', this.subscriptions[id]);
 });
+channel.on('leave', function(id) {
+    channel.removeListener('broadcast', this.subscriptions[id]);
+    channel.emit('broadcast', id, `${id} has left from chatroom.\n`);
+});
 
 const server = net.createServer(client => {
     const id = `${client.remoteAddress}:${client.remotePort}`;
@@ -23,6 +27,10 @@ const server = net.createServer(client => {
     client.on('data', data => {
        data = data.toString();
        channel.emit('broadcast', id, data);
+    });
+    client.on('close', () => {
+        console.log(id);
+        channel.emit('leave', id);
     });
 });
 
