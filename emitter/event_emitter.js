@@ -15,6 +15,13 @@ channel.on('join', function (id, client) {
         }
     };
     this.on('broadcast', this.subscriptions[id]);
+
+    const welcome = `
+      Welcome !!!
+        Guest online: ${this.listeners('broadcast').length}
+    `;
+    // console.log(this.listeners('broadcast'));
+    client.write(`${welcome}\n`);
 });
 channel.on('leave', function(id) {
     channel.removeListener('broadcast', this.subscriptions[id]);
