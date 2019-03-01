@@ -1,0 +1,19 @@
+{
+  "name": "everyDprac",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "is-sorted": "^1.0.5"
+  },
+  "dependencies": {
+    "array-first": "^1.0.2",
+    "mocha": "^5.2.0"
+  }
+}
